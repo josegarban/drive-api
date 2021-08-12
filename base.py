@@ -48,7 +48,7 @@ def listFiles(size):
             print('{0} ({1})'.format(item['name'], item['id']))
 
 def uploadFile(filename, filepath, mimetype): # Change the date & time
-    date = datetime.datetime.now(datetime.timezone.utc)
+    date = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')+".000Z"
     file_metadata = {'name': filename, 'createdTime': date,
     'modifiedTime': date, }
     media = MediaFileUpload(filepath,
