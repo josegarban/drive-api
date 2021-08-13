@@ -47,10 +47,17 @@ def listFiles(size):
         for item in items:
             print('{0} ({1})'.format(item['name'], item['id']))
 
-def uploadFile(filename, filepath, mimetype): # Change the date & time
+def uploadFile(filename, filepath, mimetype, extrametadata=None):
+    """
+    extrametadata is a dictionary
+    """
     date = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')+".000Z"
     file_metadata = {'name': filename, 'createdTime': date,
     'modifiedTime': date, }
+    if extrametadata:
+        for k in list(extrametadata.keys()):
+            file_metadata["appProperties"] = dict()
+            file_metadata["appProperties"][k] = extrametadata[k]
     media = MediaFileUpload(filepath,
                             mimetype=mimetype)
     file = drive_service.files().create(body=file_metadata,
